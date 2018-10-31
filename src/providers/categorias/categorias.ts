@@ -1,10 +1,11 @@
+import { ProdutosProvider } from './../produtos/produtos';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class CategoriasProvider {
   private PATH = 'categorias/';
-  constructor(private db: AngularFireDatabase) {}
+  constructor(private db: AngularFireDatabase, private produtosProvider: ProdutosProvider) {}
 
   public getAll(){
     return this.db.list(this.PATH)
@@ -30,7 +31,16 @@ export class CategoriasProvider {
 
     if (categoriaData.key){
       // this.db.list(this.PATH).set(categoriaData.key, categoria); atualiza somente o campo que passar e substitui tudo o que está no firebase
-      this.db.list(this.PATH).update(categoriaData.key, categoria);
+
+      // Antes de atualizar as categorias nos Produtos
+      // this.db.list(this.PATH).update(categoriaData.key, categoria);
+
+      this.db.list(this.PATH)
+        .update(categoriaData.key, categoria) // fazer a chamada para atualizar as categorias nos produtos
+        .then(() => {
+          this.produtosProvider.updateCategories(categoriaData.key, categoriaData.nome);
+        })
+
     } else{
       this.db.list(this.PATH).push(categoria);
     }
