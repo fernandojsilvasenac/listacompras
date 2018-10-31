@@ -14,6 +14,7 @@ import { ToastProvider } from '../providers/toast/toast';
 import { CategoriasProvider } from '../providers/categorias/categorias';
 import { ListasProvider } from '../providers/listas/listas';
 import { ProdutosProvider } from '../providers/produtos/produtos';
+import { config } from '../config-firebase';
 
 @NgModule({
   declarations: [
@@ -23,14 +24,7 @@ import { ProdutosProvider } from '../providers/produtos/produtos';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyC1sXtZToa-ERa7UaY3dN9-rI6UsZGFrxk",
-      authDomain: "senaccampinas-app-compartilhar.firebaseapp.com",
-      databaseURL: "https://senaccampinas-app-compartilhar.firebaseio.com",
-      projectId: "senaccampinas-app-compartilhar",
-      storageBucket: "senaccampinas-app-compartilhar.appspot.com",
-      messagingSenderId: "284178549329"
-      }),
+    AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
