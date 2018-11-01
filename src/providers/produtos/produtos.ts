@@ -20,10 +20,15 @@ export class ProdutosProvider {
       });
   }
 
-  get(key: string) {
-    return this.db.object(this.PATH + key).snapshotChanges();
+  get(key: string){
+    return this.db.object(this.PATH + key)
+      .snapshotChanges()
+      .map(m => { // aqui já é m pois eu já tenho um único objeto
+        return {key: m.key, ...m.payload.val()};
+      });
   }
-                  // file é o arquivo passando por parâmetro
+
+  // file é o arquivo passando por parâmetro
   save(item: any, file: File) {
     const product = {
       name: item.name,
@@ -73,22 +78,22 @@ export class ProdutosProvider {
     );
   }
 
-  remove(key: string, removeImg: boolean) {
-    this.db.list(this.PATH).remove(key).then(() => {
+  remove(produtokey: string, removeImg: boolean) {
+    this.db.list(this.PATH).remove(produtokey).then(() => {
       if (removeImg) {
-        this.removeImg(key);
+        this.removeImg(produtokey);
       }
     });
   }
 
-  private removeImg(key: string) {
+  private removeImg(produtokey: string) {
     const storageRef = this.fb.storage().ref();
-    storageRef.child(this.PATH_IMG + key).delete();
+    storageRef.child(this.PATH_IMG + produtokey).delete();
   }
 
-  removeImgOfProduct(key: string) {
-    this.removeImg(key);
-    this.db.object(this.PATH + key).update({ imgUrl: '' });
+  removeImgOfProduct(produtokey: string) {
+    this.removeImg(produtokey);
+    this.db.object(this.PATH + produtokey).update({ imgUrl: '' });
   }
 
   // Atualizar nome da Categoria no Cadastro de Produtos...

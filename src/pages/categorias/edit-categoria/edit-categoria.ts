@@ -19,7 +19,7 @@ export class EditCategoriaPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private toast: ToastProvider,
               private categoriasProvider: CategoriasProvider) {
-    this.categoria = this.navParams.data.categoria || {};
+    this.categoria = this.navParams.data.categoriaKey || {};
     this.SetupPageTitle();
     this.createForm();
                                                 //objeto assíncrono, estou me inscrevendo(subscribe) e recebendo no categoriaData o que vem do get no return lin 22 do provider (categoria.ts)
@@ -34,7 +34,7 @@ export class EditCategoriaPage {
 
 
   private SetupPageTitle(){
-    if (this.navParams.data.categoria){
+    if (this.navParams.data.categoriaKey){
       this.title = 'Alterando categoria';
     } else {
       this.title = 'Nova categoria';

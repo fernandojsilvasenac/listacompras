@@ -23,12 +23,12 @@ export class ListProdutosPage {
       this.navCtrl.push('EditProdutosPage');
     }
 
-    editItemProdutos(categoria: any) {                      // categoria.key é igual ao
-      this.navCtrl.push('EditProdutosPage', { categoriaKey: categoria.key });
+    editItemProdutos(produto: any) {
+      this.navCtrl.push('EditProdutosPage', { produtoKey: produto.key });
     }
 
-    removeItemProdutos(key: string, hasImg: boolean) {
-      this.produtosProvider.remove(key, hasImg);
+    removeItemProdutos(produtoKey: string, hasImg: boolean) {
+      this.produtosProvider.remove(produtoKey, hasImg);
       this.toast.show('Produto removido com sucesso.');
     }
 

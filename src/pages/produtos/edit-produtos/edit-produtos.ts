@@ -23,7 +23,8 @@ export class EditProdutosPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private formBuilder: FormBuilder, private toast: ToastProvider,
               private produtosProvider: ProdutosProvider, private categoriasProvider: CategoriasProvider) {
-                this.produtos = this.navParams.data.produtos || {};
+                this.produtos = this.navParams.data.produtoKey|| {};
+                console.log(this.produtos);
                 this.SetupPageTitle();
                 this.createForm();
                 this.loadCategories();
@@ -31,6 +32,7 @@ export class EditProdutosPage {
                 const subscribe = this.produtosProvider.get(this.navParams.data.produtoKey).subscribe((produtosData: any) => {
                   subscribe.unsubscribe();
                   this.produtos = produtosData;
+                  console.log(this.produtos);
                   this.createForm();
                 });
 
@@ -40,7 +42,7 @@ export class EditProdutosPage {
   }
 
   private SetupPageTitle(){
-    if (this.navParams.data.produtos){
+    if (this.navParams.data.produto){
       this.title = 'Alterando produtos';
     } else {
       this.title = 'Novo produto';
